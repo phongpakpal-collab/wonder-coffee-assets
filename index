@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eden — Wonder Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lime:       #A8D635;
+  --lime-light: #C8EC5A;
+  --lime-pale:  #EEF7CC;
+  --green:      #4A7C35;
+  --green-deep: #2C5220;
+  --green-mid:  #658C3A;
+  --white:      #FFFFFF;
+  --off-white:  #F5FAE8;
+  --yellow:     #F2C846;
+  --dark:       #1C2D14;
+  --text:       #2E4020;
+  --muted:      #6B8B50;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--off-white);
+  color: var(--dark);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0;
+  padding: 18px 56px;
+  display: flex; align-items:center; justify-content:space-between;
+  z-index: 200;
+  background: rgba(245,250,232,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(168,214,53,0.25);
+}
+.nav-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: var(--green-deep);
+  text-decoration: none; letter-spacing: 0.04em;
+}
+.nav-logo em { font-style:italic; color: var(--green); }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a {
+  font-size: 12px; letter-spacing:0.15em; text-transform:uppercase;
+  color: var(--muted); text-decoration:none; transition: color .25s;
+}
+.nav-links a:hover { color: var(--green); }
+.nav-btn {
+  background: var(--lime); color: var(--green-deep); border: none;
+  padding: 10px 26px; border-radius: 40px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight:600; letter-spacing:0.1em;
+  cursor: pointer; text-decoration:none; transition: all .3s;
+}
+.nav-btn:hover { background: var(--lime-light); transform: translateY(-1px); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #B8DC4A 0%, #D4F060 35%, #F0FAC0 65%, #FFFFFF 100%);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 56px 60px;
+  position: relative; overflow: hidden; gap: 40px;
+}
+.hero::before {
+  content: '';
+  position: absolute; width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
+  top: -100px; right: -100px; pointer-events:none;
+}
+
+.fruit-float {
+  position: absolute; font-size: 60px;
+  animation: drift linear infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+  user-select: none;
+}
+.fruit-float:nth-child(1)  { top:8%;  left:5%;  font-size:64px; animation-duration:7s;  animation-delay:0s;   }
+.fruit-float:nth-child(2)  { top:12%; right:8%; font-size:72px; animation-duration:9s;  animation-delay:-2s;  }
+.fruit-float:nth-child(3)  { top:55%; right:5%; font-size:56px; animation-duration:8s;  animation-delay:-4s;  }
+.fruit-float:nth-child(4)  { bottom:10%; left:3%; font-size:52px; animation-duration:10s; animation-delay:-1s; }
+.fruit-float:nth-child(5)  { bottom:15%; right:12%; font-size:44px; animation-duration:6s; animation-delay:-3s; }
+.fruit-float:nth-child(6)  { top:40%; left:2%;  font-size:36px; animation-duration:11s; animation-delay:-5s; }
+.fruit-float:nth-child(7)  { top:22%; left:38%; font-size:32px; animation-duration:8s;  animation-delay:-7s; }
+
+@keyframes drift {
+  0%,100% { transform: translateY(0px) rotate(-3deg); }
+  33%      { transform: translateY(-18px) rotate(2deg); }
+  66%      { transform: translateY(-8px) rotate(-5deg); }
+}
+
+.hero-text { position:relative; z-index:10; }
+
+.hero-badge {
+  display: inline-flex; align-items:center; gap:8px;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 40px; padding: 8px 18px;
+  font-size: 11px; font-weight:500;
+  letter-spacing: 0.15em; text-transform:uppercase;
+  color: var(--green-deep); margin-bottom: 32px;
+}
+.hero-badge::before { content: '🌿'; font-size:14px; }
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(72px, 10vw, 130px);
+  line-height: 0.88; color: var(--green-deep);
+  margin-bottom: 8px; letter-spacing: -0.02em;
+}
+.hero-title em { font-style: italic; color: var(--green); display: block; }
+
+.hero-series {
+  font-size: 13px; font-weight:500;
+  letter-spacing: 0.25em; text-transform:uppercase;
+  color: var(--green-mid); margin-bottom: 40px;
+}
+
+.hero-tags { display: flex; flex-wrap:wrap; gap:10px; margin-bottom: 44px; }
+.htag {
+  padding: 7px 16px; border-radius:30px;
+  font-size: 11px; font-weight:500; letter-spacing:0.1em; text-transform:uppercase;
+  background: rgba(255,255,255,0.5); border: 1px solid rgba(74,124,53,0.2);
+  color: var(--green-deep); backdrop-filter: blur(4px); transition: all .25s;
+}
+.htag:hover { background: var(--lime); border-color: var(--lime); }
+
+.hero-cta { display:flex; gap:16px; align-items:center; }
+
+.btn-buy {
+  background: var(--green-deep); color: #fff; border:none;
+  padding: 16px 40px; border-radius: 50px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase;
+  cursor: pointer; text-decoration:none;
+  box-shadow: 0 8px 32px rgba(44,82,32,0.3); transition: all .3s;
+}
+.btn-buy:hover { background: var(--green); transform:translateY(-3px); box-shadow: 0 16px 40px rgba(44,82,32,0.35); }
+
+.btn-learn {
+  color: var(--green-deep); font-size:12px; font-weight:500;
+  letter-spacing:0.15em; text-transform:uppercase; text-decoration:none;
+  border-bottom: 2px solid rgba(44,82,32,0.3); padding-bottom:2px; transition: border-color .3s;
+}
+.btn-learn:hover { border-color: var(--green-deep); }
+
+.hero-product {
+  position: relative; z-index:10;
+  display: flex; align-items:center; justify-content:center;
+}
+.product-img-wrap {
+  position: relative;
+  animation: floatImg 5s ease-in-out infinite;
+}
+@keyframes floatImg {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-16px) rotate(1.5deg); }
+}
+.product-img-wrap img {
+  width: 100%; max-width: 400px;
+  border-radius: 24px;
+  filter: drop-shadow(0 30px 80px rgba(44,82,32,0.35));
+}
+.product-img-wrap::after {
+  content: '';
+  position: absolute; bottom: -30px; left:10%; right:10%; height:40px;
+  background: radial-gradient(ellipse, rgba(44,82,32,0.2) 0%, transparent 70%);
+  filter: blur(12px);
+}
+.weight-pill {
+  position: absolute; bottom: 20px; right: -10px;
+  background: var(--yellow); border-radius: 50px; padding: 12px 20px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--dark);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  display: flex; flex-direction:column; align-items:center; line-height:1.1;
+}
+.weight-pill small { font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:500; letter-spacing:0.1em; }
+
+/* ── SPECS STRIP ── */
+.specs-strip {
+  background: var(--green-deep);
+  display: flex; overflow: hidden;
+}
+.spec-cell {
+  flex: 1; padding: 40px 36px;
+  border-right: 1px solid rgba(255,255,255,0.08); transition: background .3s;
+}
+.spec-cell:last-child { border-right:none; }
+.spec-cell:hover { background: rgba(255,255,255,0.05); }
+.spec-key {
+  font-size: 9px; letter-spacing:0.3em; text-transform:uppercase;
+  color: var(--lime); margin-bottom: 10px;
+}
+.spec-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: #fff; line-height:1.3;
+}
+.spec-val em { font-style:italic; font-size:16px; opacity:.7; display:block; }
+
+/* ── STORY ── */
+.story {
+  padding: 120px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items:center;
+  background: var(--white); position: relative; overflow:hidden;
+}
+.sec-tag {
+  display: inline-flex; align-items:center; gap:10px;
+  font-size: 10px; font-weight:600; letter-spacing:0.3em; text-transform:uppercase;
+  color: var(--green); margin-bottom: 24px;
+}
+.sec-tag::before { content:''; width:20px; height:2px; background:var(--lime); border-radius:2px; }
+
+.story-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 4vw, 58px); line-height:1.05;
+  color: var(--dark); margin-bottom: 28px;
+}
+.story-title em { font-style:italic; color:var(--green); }
+
+.story-body { font-size: 15px; line-height:1.9; color: var(--muted); margin-bottom: 20px; }
+
+.process-cards {
+  display: flex; flex-direction:column; gap:1px;
+  background: var(--lime-pale); border-radius: 16px; overflow:hidden;
+}
+.pcard {
+  background: #fff; padding: 24px 28px;
+  display: flex; gap:20px; align-items:flex-start; transition: background .25s;
+}
+.pcard:hover { background: var(--off-white); }
+.pcard-num {
+  width:32px; height:32px; border-radius:50%;
+  background: var(--lime-pale); border: 2px solid var(--lime);
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:600; color:var(--green-deep); flex-shrink:0;
+}
+.pcard-title { font-size:13px; font-weight:600; color:var(--dark); margin-bottom:4px; }
+.pcard-desc  { font-size:12px; line-height:1.7; color:var(--muted); }
+
+/* ── TASTING ── */
+.tasting {
+  background: linear-gradient(160deg, #EEF7CC 0%, #F5FAE8 60%, #fff 100%);
+  padding: 100px 80px;
+}
+.tasting-inner {
+  display: grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;
+}
+.tasting-title {
+  font-family:'DM Serif Display',serif;
+  font-size: clamp(36px,4vw,56px); line-height:1.05; margin-bottom:32px;
+}
+.tasting-title em { font-style:italic; color:var(--green); }
+
+.flavor-cards { display: grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom: 40px; }
+.flavor-card {
+  background: #fff; border-radius:16px; padding:20px;
+  border: 1px solid rgba(168,214,53,0.2);
+  box-shadow: 0 4px 20px rgba(74,124,53,0.06); transition: all .3s;
+}
+.flavor-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(74,124,53,0.12); border-color:var(--lime); }
+.flavor-emoji { font-size:28px; margin-bottom:10px; display:block; }
+.flavor-name { font-size:12px; font-weight:600; color:var(--dark); letter-spacing:.08em; margin-bottom:4px; }
+.flavor-note { font-size:11px; color:var(--muted); line-height:1.5; }
+
+.variety-note { background: var(--green-deep); color:#fff; border-radius:16px; padding:28px 32px; }
+.variety-note h4 { font-family:'DM Serif Display',serif; font-size:22px; color:var(--lime); margin-bottom:12px; }
+.variety-note p { font-size:13px; line-height:1.8; color:rgba(255,255,255,0.6); }
+
+.flavor-visual {
+  position:relative; display:flex; align-items:center; justify-content:center; min-height:420px;
+}
+.fw-ring {
+  position:absolute; border-radius:50%; border:1px dashed rgba(74,124,53,0.15);
+}
+.fw-ring-1 { width:380px; height:380px; }
+.fw-ring-2 { width:260px; height:260px; }
+.fw-ring-3 { width:140px; height:140px; }
+.fw-center {
+  position:relative; z-index:5; text-align:center;
+  width:110px; height:110px; border-radius:50%;
+  background: var(--lime);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  box-shadow: 0 8px 32px rgba(74,124,53,0.2);
+}
+.fw-center-title { font-family:'DM Serif Display',serif; font-size:13px; color:var(--green-deep); line-height:1.2; }
+.fw-dot {
+  position:absolute; text-align:center; transform:translate(-50%,-50%);
+}
+.fw-dot-circle {
+  width:10px; height:10px; border-radius:50%; background:var(--lime); margin:0 auto 5px;
+  box-shadow:0 0 0 4px rgba(168,214,53,0.2);
+}
+.fw-dot-label {
+  font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--green-deep); white-space:nowrap;
+  background:rgba(255,255,255,0.85); padding:3px 8px; border-radius:20px;
+}
+
+/* ── STORAGE ── */
+.storage {
+  background: var(--lime); padding: 60px 80px;
+  display:flex; align-items:center; gap:48px;
+}
+.storage-icon { font-size:56px; flex-shrink:0; filter: drop-shadow(0 4px 12px rgba(44,82,32,0.2)); }
+.storage-key { font-size:10px; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color: var(--green-deep); margin-bottom:10px; }
+.storage-heading { font-family:'DM Serif Display',serif; font-size:30px; color: var(--green-deep); margin-bottom:8px; }
+.storage-desc { font-size:13px; line-height:1.8; color: var(--green); }
+
+/* ── ORDER ── */
+.order {
+  background: var(--green-deep);
+  padding: 120px 80px; text-align:center; position:relative; overflow:hidden;
+}
+.order::before {
+  content:'EDEN';
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-family:'DM Serif Display',serif; font-size:280px; line-height:1;
+  color:rgba(255,255,255,0.03); white-space:nowrap; pointer-events:none;
+}
+.order-fruit {
+  position:absolute; font-size:48px; opacity:.12;
+  animation: drift linear infinite; pointer-events:none;
+}
+.order-fruit:nth-child(1){ top:10%; left:5%;  animation-duration:8s;  }
+.order-fruit:nth-child(2){ top:15%; right:8%; animation-duration:11s; animation-delay:-3s; }
+.order-fruit:nth-child(3){ bottom:12%; left:8%; animation-duration:9s; animation-delay:-5s; }
+.order-fruit:nth-child(4){ bottom:10%; right:6%; animation-duration:7s; animation-delay:-2s; }
+
+.order-tag {
+  display:inline-flex; align-items:center; gap:12px;
+  font-size:10px; font-weight:600; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--lime); margin-bottom:24px;
+}
+.order-tag::before,.order-tag::after { content:''; width:28px; height:1px; background:var(--lime); opacity:.5; }
+
+.order-title {
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(54px,8vw,100px); line-height:.9; color:#fff; margin-bottom:8px;
+}
+.order-title em { font-style:italic; color:var(--lime); }
+.order-sub { font-size:13px; letter-spacing:.1em; color:rgba(255,255,255,.4); margin-bottom:52px; }
+
+.order-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+.btn-order-main {
+  background:var(--lime); color:var(--green-deep); border:none;
+  padding:18px 52px; border-radius:50px;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:700;
+  letter-spacing:.15em; text-transform:uppercase;
+  cursor:pointer; text-decoration:none;
+  box-shadow:0 8px 32px rgba(168,214,53,0.3); transition: all .3s;
+}
+.btn-order-main:hover { background:var(--lime-light); transform:translateY(-3px); }
+
+.btn-order-ghost {
+  background:transparent; color:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.2);
+  padding:18px 52px; border-radius:50px;
+  font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:400;
+  letter-spacing:.15em; text-transform:uppercase;
+  cursor:pointer; text-decoration:none; transition: all .3s;
+}
+.btn-order-ghost:hover { border-color:var(--lime); color:var(--lime); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark); padding: 36px 80px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-logo { font-family:'DM Serif Display',serif; font-size:20px; color:#fff; text-decoration:none; }
+.footer-logo em { font-style:italic; color:var(--lime); }
+.footer-copy { font-size:10px; letter-spacing:.2em; color:rgba(255,255,255,.2); }
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(28px); transition: opacity .75s ease, transform .75s ease; }
+.reveal.vis { opacity:1; transform:translateY(0); }
+
+@media (max-width:900px){
+  nav { padding:16px 24px; }
+  .nav-links { display:none; }
+  .hero { grid-template-columns:1fr; padding:100px 24px 48px; }
+  .hero-product { order:-1; }
+  .product-img-wrap img { max-width:300px; }
+  .specs-strip { flex-wrap:wrap; }
+  .spec-cell { flex:0 0 50%; border-bottom:1px solid rgba(255,255,255,.08); }
+  .story { grid-template-columns:1fr; padding:60px 24px; }
+  .tasting { padding:60px 24px; }
+  .tasting-inner { grid-template-columns:1fr; }
+  .storage { padding:40px 24px; flex-direction:column; }
+  .order { padding:80px 24px; }
+  footer { padding:28px 24px; flex-direction:column; gap:12px; text-align:center; }
+}
+
+  
+
+
+  /* ── STORY BANNER GIF ── */
+  .story-banner {
+    width: 100%;
+    margin-top: 56px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(44,82,32,0.15);
+    line-height: 0;
+  }
+  .story-banner img {
+    width: 100%;
+    display: block;
+    border-radius: 16px;
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Wonder <em>Eden</em></a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="#tasting">Tasting</a></li>
+    <li><a href="#specs">Details</a></li>
+    <li><a href="#order">Order</a></li>
+  </ul>
+  <a href="#order" class="nav-btn">Buy Now</a>
+</nav>
+
+<section class="hero">
+  <span class="fruit-float">🍎</span>
+  <span class="fruit-float">🥝</span>
+  <span class="fruit-float">🍋</span>
+  <span class="fruit-float">🫐</span>
+  <span class="fruit-float">🍍</span>
+  <span class="fruit-float">🍊</span>
+  <span class="fruit-float">🌿</span>
+
+  <div class="hero-text">
+    <div class="hero-badge">Specialty Coffee · Chiang Rai · Since 2009</div>
+    <h1 class="hero-title">Wonder<em>Eden</em></h1>
+    <p class="hero-series">Kombucha Series — Natural Scoby Selected</p>
+    <div class="hero-tags">
+      <span class="htag">Light Roast</span>
+      <span class="htag">Cartimor</span>
+      <span class="htag">1,200 m.a.s.l.</span>
+      <span class="htag">200 g</span>
+      <span class="htag">SCOBY Fermented</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#order" class="btn-buy">Order Now</a>
+      <a href="#story" class="btn-learn">Our Story ↓</a>
+    </div>
+  </div>
+
+  <div class="hero-product">
+    <div class="product-img-wrap">
+      <img src="eden_nobg.png" alt="Eden Coffee Bag">
+      <div class="weight-pill">200<small>gram</small></div>
+    </div>
+  </div>
+  <!-- Story Banner GIF - full width -->
+  <div class="story-banner" style="grid-column: 1 / -1;">
+    <img src="eden_banner.gif" alt="Eden Coffee in motion">
+  </div>
+
+</section>
+
+<div class="specs-strip" id="specs">
+  <div class="spec-cell">
+    <div class="spec-key">Origin</div>
+    <div class="spec-val">Chiang Rai <em>Thailand</em></div>
+  </div>
+  <div class="spec-cell">
+    <div class="spec-key">Variety</div>
+    <div class="spec-val">Cartimor</div>
+  </div>
+  <div class="spec-cell">
+    <div class="spec-key">Process</div>
+    <div class="spec-val">Natural <em>SCOBY Selected</em></div>
+  </div>
+  <div class="spec-cell">
+    <div class="spec-key">Altitude</div>
+    <div class="spec-val">1,200 m.a.s.l.</div>
+  </div>
+  <div class="spec-cell">
+    <div class="spec-key">Roast Level</div>
+    <div class="spec-val">Light Roast</div>
+  </div>
+</div>
+
+<section class="story" id="story">
+  <div class="reveal">
+    <div class="sec-tag">Our Journey</div>
+    <h2 class="story-title">A <em>Fermentation</em><br>Like No Other</h2>
+    <p class="story-body">
+      Wonder Coffee has been cultivating specialty coffee in the highlands of Chiang Rai since 2009. Our Cartimor variety grows at 1,200 metres above sea level — and we process it in a way no one else does.
+    </p>
+    <p class="story-body">
+      We adapted SCOBY — the living culture of bacteria and yeast famous for fermenting kombucha — to work on coffee cherries. The result transforms Cartimor's natural character into something extraordinary.
+    </p>
+  </div>
+
+  <div class="reveal" style="transition-delay:.15s">
+    <div class="process-cards">
+      <div class="pcard">
+        <div class="pcard-num">01</div>
+        <div>
+          <div class="pcard-title">Cartimor Cherry Harvest</div>
+          <div class="pcard-desc">Hand-picked at peak ripeness in the Chiang Rai highlands at 1,200 m.a.s.l.</div>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">02</div>
+        <div>
+          <div class="pcard-title">SCOBY Inoculation</div>
+          <div class="pcard-desc">A carefully selected Symbiotic Culture of Bacteria and Yeast is introduced to the coffee cherries.</div>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">03</div>
+        <div>
+          <div class="pcard-title">Controlled Fermentation</div>
+          <div class="pcard-desc">Natural sugars transform at 20–30°C, developing fruity complexity and bright acidity.</div>
+        </div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-num">04</div>
+        <div>
+          <div class="pcard-title">Light Roast</div>
+          <div class="pcard-desc">Roasted light to preserve every nuance of the fermentation-developed flavour profile.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tasting" id="tasting">
+  <div class="tasting-inner">
+    <div class="reveal">
+      <div class="sec-tag">Tasting Notes</div>
+      <h2 class="tasting-title">Flavours That<br><em>Surprise</em> You</h2>
+      <div class="flavor-cards">
+        <div class="flavor-card">
+          <span class="flavor-emoji">🍊</span>
+          <div class="flavor-name">Orange</div>
+          <div class="flavor-note">Vibrant citrus, sun-ripened and juicy</div>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">🍍</span>
+          <div class="flavor-name">Pineapple Jam</div>
+          <div class="flavor-note">Rich tropical sweetness from fermentation</div>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">🌰</span>
+          <div class="flavor-name">Almond · Nutty</div>
+          <div class="flavor-note">Warm roasted depth, smooth and grounding</div>
+        </div>
+        <div class="flavor-card">
+          <span class="flavor-emoji">✨</span>
+          <div class="flavor-name">Sweet Finish</div>
+          <div class="flavor-note">Bright acidity into a long sweet aftertaste</div>
+        </div>
+      </div>
+      <div class="variety-note">
+        <h4>Also: Wonderfruit Eden</h4>
+        <p>Apple cider · Green grape · Lemon sugarcane · Smooth body · Juicy sweet aftertaste</p>
+      </div>
+    </div>
+
+    <div class="flavor-visual reveal" style="transition-delay:.2s">
+      <div class="fw-ring fw-ring-1"></div>
+      <div class="fw-ring fw-ring-2"></div>
+      <div class="fw-ring fw-ring-3"></div>
+      <div class="fw-dot" style="top:8%; left:50%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Orange</div></div>
+      <div class="fw-dot" style="top:22%; right:5%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Tropical</div></div>
+      <div class="fw-dot" style="top:60%; right:2%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Pineapple</div></div>
+      <div class="fw-dot" style="bottom:8%; left:50%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Sweet Finish</div></div>
+      <div class="fw-dot" style="top:60%; left:2%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Juicy Body</div></div>
+      <div class="fw-dot" style="top:22%; left:5%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Bright Acid</div></div>
+      <div class="fw-dot" style="top:40%; right:0%"><div class="fw-dot-circle"></div><div class="fw-dot-label">Almond</div></div>
+      <div class="fw-center"><div class="fw-center-title">Eden<br>Profile</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="storage">
+  <div class="storage-icon">🌡️</div>
+  <div>
+    <div class="storage-key">Tip & Trick · Wonderfruit</div>
+    <h3 class="storage-heading">Always Keep in Our Package</h3>
+    <p class="storage-desc">Store coffee below 30°C in the original sealed packaging. This preserves the aroma, freshness, and the unique character developed through our kombucha fermentation process.</p>
+  </div>
+</div>
+
+<section class="order" id="order">
+  <span class="order-fruit">🍎</span>
+  <span class="order-fruit">🥝</span>
+  <span class="order-fruit">🍋</span>
+  <span class="order-fruit">🫐</span>
+
+  <div class="order-tag">Order Now</div>
+  <h2 class="order-title">Wonder<br><em>Eden</em></h2>
+  <p class="order-sub">200g · Specialty Grade · Light Roast · Kombucha Series</p>
+  <div class="order-btns">
+    <a href="#" class="btn-order-main">Add to Cart</a>
+    <a href="#" class="btn-order-ghost">Contact Us</a>
+  </div>
+</section>
+
+
+
+
+<footer>
+  <a href="#" class="footer-logo">Wonder <em>Eden</em></a>
+  <div class="footer-copy">Specialty Coffee · Chiang Rai, Thailand · Since 2009</div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
